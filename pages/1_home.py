@@ -33,7 +33,7 @@ def main():
     with col1:
         st.title("SYNAPSE")
     with col2:
-        st.page_link("pages/2_Login.py", label="Login/Signup", icon="🔒")  # Links to Login page
+        st.page_link("pages/2_login.py", label="Login/Signup", icon="🔒")  # Links to Login page
 
     st.write("Facing challenges while organizing your Medical Report? 😖")
     st.write("No more keeping track of your individual report! Welcome to the one-stop solution.")
