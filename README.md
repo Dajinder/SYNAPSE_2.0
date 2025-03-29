@@ -25,18 +25,19 @@ SYNAPSE is a multi-page Streamlit application designed to allow users to upload,
 
 ## File Structure
    synapse-app/
-   ├── Synapse.py                  # Main app file (landing page)
+   ├── app.py                  # Main app file (landing page)
    ├── utils.py                # Utility functions (database, text extraction, theme, etc.)
    ├── requirements.txt        # Python dependencies
    ├── packages.txt            # System dependencies for Streamlit Community Cloud
+   ├── README.md               # Project documentation
    ├── logo_3.jpg              # Logo image for sidebar
    ├── landing_page.jpg        # Landing page image
    ├── pages/                  # Directory for multi-page app
-   │   ├── 1_Home.py           # Home page
-   │   ├── 2_Login.py          # Login and signup page
-   │   ├── 3_Upload_Report.py  # Report upload page
-   │   ├── 4_Uploaded_Reports.py  # View uploaded reports page
-   │   ├── 5_Subscription.py   # Subscription page
+   │   ├── 1_home.py           # Home page
+   │   ├── 2_login.py          # Login and signup page
+   │   ├── 3_upload_report.py  # Report upload page
+   │   ├── 4_uploaded_reports.py  # View uploaded reports page
+   │   ├── 5_subscription.py   # Subscription page
    ├── users.db                # SQLite database for user data (created on first run)
    ├── reports.db              # SQLite database for report data (created on first run)
 
