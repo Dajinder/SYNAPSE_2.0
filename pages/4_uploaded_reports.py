@@ -1,22 +1,24 @@
 # pages/4_Uploaded_Reports.py
 import streamlit as st
 import pandas as pd
-from utils import apply_theme, get_user_reports
+from utils import apply_theme, get_user_reports, add_theme_toggle_to_sidebar
 
 # Set page config
 st.set_page_config(page_title="Uploaded Reports", page_icon="📋")
 
 apply_theme()
 
+# Add theme toggle to sidebar
+add_theme_toggle_to_sidebar()
 
-# Top right theme toggle
-col1, col2 = st.columns([4, 1])
-with col2:
-    dark_mode = st.toggle("Dark Mode", value=(st.session_state.theme == "Dark"))
-    new_theme = "Dark" if dark_mode else "Light"
-    if new_theme != st.session_state.theme:
-        st.session_state.theme = new_theme
-        st.rerun()
+# # Top right theme toggle
+# col1, col2 = st.columns([4, 1])
+# with col2:
+#     dark_mode = st.toggle("Dark Mode", value=(st.session_state.theme == "Dark"))
+#     new_theme = "Dark" if dark_mode else "Light"
+#     if new_theme != st.session_state.theme:
+#         st.session_state.theme = new_theme
+#         st.rerun()
 
 st.logo(image="logo_6.png", size="large")
 

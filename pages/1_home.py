@@ -3,22 +3,25 @@ import streamlit as st
 import base64
 import os
 import time
-from utils import apply_theme
+from utils import apply_theme, add_theme_toggle_to_sidebar
 
 # Set page config (must be at the top)
 st.set_page_config(page_title="Home", page_icon="🏠")
 
 apply_theme()
 
+# Add theme toggle to sidebar
+add_theme_toggle_to_sidebar()
 
-# Top right theme toggle
-col1, col2 = st.columns([7, 1])
-with col2:
-    dark_mode = st.toggle("Dark Mode", value=(st.session_state.theme == "Dark"))
-    new_theme = "Dark" if dark_mode else "Light"
-    if new_theme != st.session_state.theme:
-        st.session_state.theme = new_theme
-        st.rerun()
+
+# # Top right theme toggle
+# col1, col2 = st.columns([7, 1])
+# with col2:
+#     dark_mode = st.toggle("Dark Mode", value=(st.session_state.theme == "Dark"))
+#     new_theme = "Dark" if dark_mode else "Light"
+#     if new_theme != st.session_state.theme:
+#         st.session_state.theme = new_theme
+#         st.rerun()
 
 st.logo(image="logo_6.png", size="large")
 
@@ -33,7 +36,7 @@ def main():
     with col1:
         st.title("SYNAPSE")
     with col2:
-        st.page_link("pages/2_login.py", label="Login/Signup", icon="🔒")  # Links to Login page
+        st.page_link("pages/2_Login.py", label="Login/Signup", icon="🔒")  # Links to Login page
 
     st.write("Facing challenges while organizing your Medical Report? 😖")
     st.write("No more keeping track of your individual report! Welcome to the one-stop solution.")

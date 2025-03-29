@@ -189,3 +189,16 @@ def apply_theme():
 
             </style>
         """, unsafe_allow_html=True)
+
+# Add a function to create the theme toggle in the sidebar
+def add_theme_toggle_to_sidebar():
+    # st.sidebar.markdown("---")
+    dark_mode = st.sidebar.toggle(
+        "Dark Mode" if st.session_state.theme == "Light" else "Light Mode",
+        value=(st.session_state.theme == "Dark"),
+        key="theme_toggle"
+    )
+    new_theme = "Dark" if dark_mode else "Light"
+    if new_theme != st.session_state.theme:
+        st.session_state.theme = new_theme
+        st.rerun()

@@ -1,6 +1,6 @@
 # pages/2_Login.py
 import streamlit as st
-from utils import validate_user, register_user, apply_theme
+from utils import validate_user, register_user, apply_theme, add_theme_toggle_to_sidebar
 
 
 # Set page config
@@ -8,18 +8,20 @@ st.set_page_config(page_title="Login", page_icon="🔑")
 
 apply_theme()
 
+# Add theme toggle to sidebar
+add_theme_toggle_to_sidebar()
 
-# Top right theme toggle
-col1, col2 = st.columns([7, 1])
-with col2:
-    dark_mode = st.toggle(
-        "Light Mode" if st.session_state.theme == "Dark" else "Dark Mode",
-        value=(st.session_state.theme == "Dark")
-    )
-    new_theme = "Dark" if dark_mode else "Light"
-    if new_theme != st.session_state.theme:
-        st.session_state.theme = new_theme
-        st.rerun()
+# # Top right theme toggle
+# col1, col2 = st.columns([7, 1])
+# with col2:
+#     dark_mode = st.toggle(
+#         "Light Mode" if st.session_state.theme == "Dark" else "Dark Mode",
+#         value=(st.session_state.theme == "Dark")
+#     )
+#     new_theme = "Dark" if dark_mode else "Light"
+#     if new_theme != st.session_state.theme:
+#         st.session_state.theme = new_theme
+#         st.rerun()
 
 st.logo(image="logo_6.png", size="large")
 
@@ -64,10 +66,10 @@ def main():
 
         col1, col2 = st.columns([2, 1])  # 4:1 ratio to push button to the right
         with col1:
-            st.page_link("pages/3_upload_report.py", label="Upload Report", icon="📤")
+            st.page_link("pages/3_Upload_Report.py", label="Upload Report", icon="📤")
             
         with col2:
-            st.page_link("pages/4_uploaded_reports.py", label="Uploaded Reports", icon="📋")  # Links to Login page
+            st.page_link("pages/4_Uploaded_Reports.py", label="Uploaded Reports", icon="📋")  # Links to Login page
 
 
         if st.button("Logout"):

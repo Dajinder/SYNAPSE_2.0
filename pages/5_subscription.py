@@ -1,21 +1,24 @@
 # pages/5_Subscription.py
 import streamlit as st
-from utils import apply_theme
+from utils import apply_theme, add_theme_toggle_to_sidebar
 
 # Set page config
 st.set_page_config(page_title="Subscription", page_icon="💳")
 
 apply_theme()
 
+# Add theme toggle to sidebar
+add_theme_toggle_to_sidebar()
 
-# Top right theme toggle
-col1, col2 = st.columns([4, 1])
-with col2:
-    dark_mode = st.toggle("Dark Mode", value=(st.session_state.theme == "Dark"))
-    new_theme = "Dark" if dark_mode else "Light"
-    if new_theme != st.session_state.theme:
-        st.session_state.theme = new_theme
-        st.rerun()
+
+# # Top right theme toggle
+# col1, col2 = st.columns([4, 1])
+# with col2:
+#     dark_mode = st.toggle("Dark Mode", value=(st.session_state.theme == "Dark"))
+#     new_theme = "Dark" if dark_mode else "Light"
+#     if new_theme != st.session_state.theme:
+#         st.session_state.theme = new_theme
+#         st.rerun()
 
 st.logo(image="logo_6.png", size="large")
 
@@ -54,7 +57,7 @@ def main():
             st.write("Enjoy unlimited uploads and premium features.")
 
         # Back to upload page
-        st.page_link("pages/3_upload_report.py", label="Back to Upload Reports", icon="📤")
+        st.page_link("pages/3_Upload_Report.py", label="Back to Upload Reports", icon="📤")
 
 if __name__ == "__main__":
     main()
