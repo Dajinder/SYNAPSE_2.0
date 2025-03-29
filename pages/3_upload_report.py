@@ -1,6 +1,6 @@
 # pages/3_Upload_Report.py
 import streamlit as st
-from utils import extract_text_from_pdf, extract_text_from_image, convert_pdf_to_images, apply_theme
+from utils import extract_text_from_pdf, extract_text_from_image, convert_pdf_to_images, apply_theme, get_user_reports, save_report
 import io
 import datetime
 from PIL import Image
@@ -42,8 +42,10 @@ def main():
             st.page_link("pages/4_uploaded_reports.py", label="Uploaded Reports", icon="📋")  # Links to Login page
 
 
-        st.write(f"Welcome, {st.session_state.username}!")  # Confirm user
+        # st.write(f"Welcome, {st.session_state.username}!")  # Confirm user
 
+        # Fetch the user's reports from the database to check the count
+        user_reports = get_user_reports(st.session_state.username)
         report_count = len(st.session_state.reports)
         max_free_reports = 5
 
@@ -88,17 +90,43 @@ def main():
                     else:
                         st.warning("No text extracted.")
 
-                upload_time = datetime.datetime.now()
-                file_bytes = io.BytesIO(uploaded_file.getvalue())
-                file_size = file_bytes.getbuffer().nbytes
+                # upload_time = datetime.datetime.now()
+                # file_bytes = io.BytesIO(uploaded_file.getvalue())
+                # file_size = file_bytes.getbuffer().nbytes
 
-                st.session_state.reports.append({
-                    "name": uploaded_file.name,
-                    "file": file_bytes,
-                    "upload_time": upload_time,
-                    "type": file_type,
-                    "size": file_size
-                })
+
+                # Save the report to the database
+                upload_time = datetime.datetime.now()
+                file_bytes = uploaded_file.getvalue()  # Get raw bytes for database storage
+                file_size = len(file_bytes)
+
+                # Save to database
+                save_report(
+                    username=st.session_state.username,
+                    file_name=uploaded_file.name,
+                    file_data=file_bytes,  # Store as BLOB
+                    upload_time=upload_time,
+                    file_type=file_type,
+                    file_size=file_size
+                )
+
+                # # Update session state for immediate display (optional, can be removed if fully relying on DB)
+                # if 'reports' not in st.session_state:
+                #     st.session_state.reports = []
+                # st.session_state.reports.append({
+                #     "name": uploaded_file.name,
+                #     "file": io.BytesIO(file_bytes),
+                #     "upload_time": upload_time,
+                #     "type": file_type,
+                #     "size": file_size
+                # })
+
+                # Show a success message
+                st.success("Report uploaded successfully!")
+
+                # Check the updated report count after upload
+                user_reports = get_user_reports(st.session_state.username)
+                report_count = len(user_reports)
 
                 # Show warning when reaching the limit
                 if not st.session_state.subscribed and len(st.session_state.reports) == max_free_reports:

@@ -9,14 +9,28 @@ import io
 import datetime
 import streamlit as st
 
-# SQLite DB Setup
+# SQLite DB Setup for users and reports
 def init_db():
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
+    # Users table
     c.execute("""
         CREATE TABLE IF NOT EXISTS users (
             username TEXT PRIMARY KEY,
             password TEXT
+        )
+    """)
+    # Reports table
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS reports (
+            report_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            file_name TEXT,
+            file_data BLOB,
+            upload_time TEXT,
+            file_type TEXT,
+            file_size INTEGER,
+            FOREIGN KEY (username) REFERENCES users(username)
         )
     """)
     conn.commit()
@@ -43,6 +57,38 @@ def validate_user(username, password):
     user = c.fetchone()
     conn.close()
     return user is not None
+
+# Save a report to the database
+def save_report(username, file_name, file_data, upload_time, file_type, file_size):
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("""
+        INSERT INTO reports (username, file_name, file_data, upload_time, file_type, file_size)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (username, file_name, file_data, upload_time.isoformat(), file_type, file_size))
+    conn.commit()
+    conn.close()
+
+# Retrieve reports for a user
+def get_user_reports(username):
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM reports WHERE username = ?", (username,))
+    reports = c.fetchall()
+    conn.close()
+    # Convert database rows to the same format as st.session_state.reports
+    formatted_reports = []
+    for report in reports:
+        formatted_reports.append({
+            "report_id": report[0],
+            "username": report[1],
+            "name": report[2],
+            "file": io.BytesIO(report[3]),  # Convert BLOB back to BytesIO
+            "upload_time": datetime.datetime.fromisoformat(report[4]),
+            "type": report[5],
+            "size": report[6]
+        })
+    return formatted_reports
 
 # Extract text from PDF
 def extract_text_from_pdf(file):

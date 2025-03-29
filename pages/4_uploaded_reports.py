@@ -1,7 +1,7 @@
 # pages/4_Uploaded_Reports.py
 import streamlit as st
 import pandas as pd
-from utils import apply_theme
+from utils import apply_theme, get_user_reports
 
 # Set page config
 st.set_page_config(page_title="Uploaded Reports", page_icon="📋")
@@ -39,9 +39,14 @@ def main():
         st.title("Uploaded Reports Sorted by Date")
         st.write(f"Welcome, {st.session_state.username}!")
 
-        if st.session_state.reports:
-            sorted_reports = sorted(st.session_state.reports, key=lambda x: x["upload_time"], reverse=True)
+        # if st.session_state.reports:
+        #     sorted_reports = sorted(st.session_state.reports, key=lambda x: x["upload_time"], reverse=True)
 
+        # Retrieve reports from the database
+        reports = get_user_reports(st.session_state.username)
+
+        if reports:
+            sorted_reports = sorted(reports, key=lambda x: x["upload_time"], reverse=True)
             col1, col2, col3, col4 = st.columns([2, 3, 2, 1])  # Adjust column widths
             with col1:
                 st.write("**File Name**")
