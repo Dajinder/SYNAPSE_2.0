@@ -136,7 +136,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Right-aligned Home/Login links
-col1, col2, col3 = st.columns([6, 0.75, 1])
+col1, col2, col3 = st.columns([6, 1, 1])
 with col2:
     st.page_link("pages/1_Home.py", icon="🏠", label="Home")
 with col3:
