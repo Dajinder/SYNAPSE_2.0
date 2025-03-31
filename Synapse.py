@@ -81,7 +81,7 @@ def get_image_base64(path):
 
 # Load images
 human_base64 = get_image_base64("human.png")
-robot_base64 = get_image_base64("robot.png")
+robot_base64 = get_image_base64("Robot.png")
 
 # Style and layout
 st.markdown(f"""
