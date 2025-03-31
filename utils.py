@@ -122,7 +122,7 @@ def convert_pdf_to_images(pdf_file):
 # Apply theme function
 def apply_theme():
     if 'theme' not in st.session_state:
-        st.session_state.theme = "Light"  # Default to Light theme
+        st.session_state.theme = "Dark"  # Default to Dark theme
 
         
 
