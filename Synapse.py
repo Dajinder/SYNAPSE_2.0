@@ -69,8 +69,15 @@ st.markdown("""
 
 # Helper to encode images
 def get_image_base64(path):
-    with open(path, "rb") as f:
-        return base64.b64encode(f.read()).decode("utf-8")
+    try:
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read()).decode("utf-8")
+    except FileNotFoundError:
+        st.error(f"Error: Image file '{path}' not found in the project directory.")
+        return None
+    except Exception as e:
+        st.error(f"Error converting image '{path}' to Base64: {str(e)}")
+        return None
 
 # Load images
 human_base64 = get_image_base64("human.png")
