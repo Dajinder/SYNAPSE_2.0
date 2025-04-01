@@ -1,5 +1,7 @@
 # SYNAPSE - Diagnostic Report Management App
 
+# Link to the Application: https://dajinder-synapse-2-0-synapse-ssojvx.streamlit.app/
+
 ## Overview
 SYNAPSE is a multi-page Streamlit application designed to allow users to upload, view, and manage diagnostic reports (PDFs or images). The app includes features like user authentication, subscription management, and report preview with text extraction. Users can sign up, log in, upload reports, view uploaded reports, and subscribe for unlimited uploads.
 
